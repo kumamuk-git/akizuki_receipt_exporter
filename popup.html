@@ -12,44 +12,79 @@
       --akizuki-orange: #ff9900;
       --akizuki-bg: #ffffff;
       --akizuki-light-bg: #f5f5f5;
-      --akizuki-text: #333333;
+      --akizuki-text: #000000;
       --akizuki-border: #cccccc;
       --akizuki-success: #006600;
       --akizuki-error: #cc3300;
     }
     
     body {
-      width: 340px;
+      width: 300px;
       padding: 0;
-      font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif;
+      font-family: "MS PGothic", "MS Gothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif;
       background: var(--akizuki-bg);
       color: var(--akizuki-text);
       margin: 0;
     }
     
     .header {
-      background: linear-gradient(to bottom, #cc0000, #990000);
-      color: white;
+      background: #fde1f4; /* 単色ピンク */
+      color: #000;
       padding: 14px 16px;
       display: flex;
       align-items: center;
       gap: 10px;
-      border-bottom: 3px solid var(--akizuki-yellow);
+      border-bottom: 1px solid #999999;
     }
     
     .header h1 {
-      font-size: 14px;
       margin: 0;
       font-weight: bold;
+      /* 黒のアウトライン + 内側は赤→オレンジのグラデーション */
+      background: linear-gradient(to right, #cc0000, #f27900);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 0.5px #000;
+      color: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+      width: 100%;
+    }
+    
+    .header h1 .line1 {
+      font-size: 36px;
+    }
+    
+    .header h1 .line2 {
+      font-size: 19.5px;
+      margin-top: 2px;
+      color: #000;
+      -webkit-text-fill-color: #000;
+      background: none;
+      -webkit-text-stroke: 0;
+      font-weight: normal;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+    
+    .header h1 .line2 .version {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      font-size: 10px;
     }
     
     .header .logo {
-      font-size: 18px;
+      display: none;
     }
     
     .header .subtitle {
-      font-size: 11px;
-      color: var(--akizuki-yellow);
+      font-size: 20px;
+      color: #000;
       margin-left: auto;
     }
     
@@ -64,8 +99,7 @@
     label {
       display: block;
       font-size: 13px;
-      font-weight: bold;
-      color: var(--akizuki-text);
+      color: #000;
       margin-bottom: 4px;
     }
     
@@ -88,7 +122,7 @@
     
     .help-text {
       font-size: 11px;
-      color: #666;
+      color: #000;
       margin-top: 4px;
       line-height: 1.4;
     }
@@ -105,57 +139,68 @@
     
     .checkbox-group {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      flex-direction: row;
+      gap: 16px;
       background: var(--akizuki-light-bg);
       padding: 10px 12px;
       border-radius: 4px;
       border: 1px solid #e0e0e0;
     }
-    
+
     .checkbox-label {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-size: 13px;
       cursor: pointer;
     }
-    
+
     .checkbox-label input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
       width: 16px;
       height: 16px;
-      accent-color: var(--akizuki-red);
+      border-radius: 50%;
+      border: 1px solid #2f66c5;
+      background: #ffffff;
+      position: relative;
       cursor: pointer;
+      box-sizing: border-box;
+      margin: 0;
+    }
+    .checkbox-label input[type="checkbox"]:checked {
+      background: radial-gradient(circle, #2f66c5 45%, #ffffff 46%);
+      border-color: #2f66c5;
     }
     
     button {
       width: 100%;
-      padding: 12px;
-      background: linear-gradient(to bottom, #ffcc00, #ff9900);
-      border: 1px solid #cc7700;
+      padding: 10px;
+      background: linear-gradient(to bottom, #ffffff 0%, #f1f1f1 100%);
+      border: 1px solid #1a73e8;
       border-radius: 4px;
-      color: #333;
+      color: #1a73e8;
       font-size: 14px;
-      font-weight: bold;
+      font-weight: normal;
       cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: flex;
+      box-shadow: none;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
-    
+
     button:hover {
-      background: linear-gradient(to bottom, #ffdd33, #ffaa33);
+      background: linear-gradient(to bottom, #f1f1f1 0%, #ffffff 100%);
     }
-    
+
     button:active {
-      background: #ff9900;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+      background: #e8f0fe;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
     }
     
     button:disabled {
-      background: #e0e0e0;
+      background: #f4f4f4;
       border-color: #ccc;
       color: #999;
       cursor: not-allowed;
@@ -163,26 +208,14 @@
     
     .status {
       font-size: 12px;
-      color: #666;
+      color: #000;
       margin-top: 12px;
-      padding: 10px;
-      background: var(--akizuki-light-bg);
-      border-radius: 4px;
-      text-align: center;
+      padding: 0;
+      background: none;
+      border-radius: 0;
+      text-align: left;
       min-height: 18px;
-      border: 1px solid #e0e0e0;
-    }
-    
-    .status.success {
-      background: #e6f4e6;
-      border-color: var(--akizuki-success);
-      color: var(--akizuki-success);
-    }
-    
-    .status.error {
-      background: #fef0ed;
-      border-color: var(--akizuki-error);
-      color: var(--akizuki-error);
+      border: none;
     }
     
     .footer {
@@ -193,19 +226,14 @@
     }
     
     .footer a {
-      color: var(--akizuki-red);
-      text-decoration: none;
-      font-size: 12px;
-    }
-    
-    .footer a:hover {
+      color: #0d01ff;
       text-decoration: underline;
+      font-size: 12px;
     }
     
     .section-title {
       font-size: 12px;
-      font-weight: bold;
-      color: var(--akizuki-dark-red);
+      color: #000;
       margin-bottom: 8px;
       padding-bottom: 4px;
       border-bottom: 1px solid #e0e0e0;
@@ -213,15 +241,20 @@
   </style>
 </head>
 <body>
-  <div class="header">
-    <span class="logo">📄</span>
-    <h1>秋月電子 領収書エクスポーター</h1>
-    <span class="subtitle">v1.0</span>
+    <div class="header">
+    <span class="logo"></span>
+    <h1>
+      <span class="line1">秋月電子通商</span>
+      <span class="line2">
+        receipt exporter
+        <span class="version">v1.0</span>
+      </span>
+    </h1>
   </div>
   
   <div class="content">
     <div class="form-group">
-      <div class="section-title">📁 保存する書類</div>
+      <div class="section-title">保存する書類</div>
       <div class="checkbox-group">
         <label class="checkbox-label">
           <input type="checkbox" id="download-receipt" checked>
@@ -239,7 +272,7 @@
     </div>
     
     <div class="form-group">
-      <label for="filename-pattern">📝 ファイル名パターン</label>
+      <label for="filename-pattern">ファイル名パターン</label>
       <input type="text" id="filename-pattern" value="{date}_{order_id}_{type}">
       <div class="help-text">
         <code>{date}</code> <code>{order_id}</code> <code>{type}</code> <code>{price}</code> <code>{product}</code> <code>{dropdown}</code>
@@ -247,15 +280,14 @@
     </div>
     
     <button id="download-btn">
-      <span>⬇️</span>
       <span>選択した注文をダウンロード</span>
     </button>
     
-    <div id="status" class="status">✓ 注文履歴でチェックを入れてダウンロードしてください</div>
+    <div id="status" class="status">注文履歴でチェックを入れてダウンロードしてください</div>
   </div>
   
   <div class="footer">
-    <a href="#" id="options-link">⚙️ 詳細設定（会社名自動入力・スプレッドシート連携）</a>
+    <a href="#" id="options-link">詳細設定（会社名自動入力・スプレッドシート連携）</a>
   </div>
   
   <script src="popup.js"></script>
