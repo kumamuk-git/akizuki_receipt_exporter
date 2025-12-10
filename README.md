@@ -81,10 +81,6 @@
 - `storage`: 設定の保存
 - `debugger`: HTMLページをPDFに変換
 
-## ライセンス
-
-MIT License
-
 ## 更新履歴
 
 ### v1.0
