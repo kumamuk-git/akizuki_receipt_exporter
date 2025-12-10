@@ -1,0 +1,171 @@
+/* 秋月電子 領収書エクスポーター - Content Script Styles */
+
+.akizuki-exporter-container {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 12px !important;
+  background: linear-gradient(to bottom, #f8f8f8, #e8e8e8) !important;
+  border: 1px solid #cc0000 !important;
+  border-radius: 4px !important;
+  margin-right: 16px !important;
+  margin-bottom: 4px !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+  vertical-align: middle !important;
+}
+
+.akizuki-exporter-checkbox {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  accent-color: #cc0000 !important;
+  margin: 0 !important;
+}
+
+.akizuki-exporter-label {
+  font-size: 13px !important;
+  color: #333 !important;
+  white-space: nowrap !important;
+  font-weight: bold !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif !important;
+}
+
+.akizuki-exporter-divider {
+  color: #ccc !important;
+  font-size: 14px !important;
+  margin: 0 4px !important;
+}
+
+.akizuki-exporter-dropdown {
+  padding: 4px 8px !important;
+  border: 1px solid #999 !important;
+  border-radius: 3px !important;
+  background: #fff !important;
+  font-size: 12px !important;
+  min-width: 100px !important;
+  max-width: 180px !important;
+  cursor: pointer !important;
+  color: #333 !important;
+  height: 26px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif !important;
+}
+
+.akizuki-exporter-dropdown:focus {
+  outline: none !important;
+  border-color: #cc0000 !important;
+  box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.2) !important;
+}
+
+.akizuki-exporter-dropdown:disabled {
+  background: #f0f0f0 !important;
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
+}
+
+/* プログレス表示 */
+.akizuki-exporter-progress {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  background: #8b0000 !important;
+  color: #fff !important;
+  padding: 16px 20px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+  z-index: 999999 !important;
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif !important;
+  min-width: 300px !important;
+  max-width: 420px !important;
+  border: 2px solid #cc0000 !important;
+}
+
+.akizuki-exporter-progress-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+}
+
+.akizuki-exporter-progress-icon {
+  font-size: 20px !important;
+}
+
+.akizuki-exporter-progress-title {
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: #ffcc00 !important;
+}
+
+.akizuki-exporter-progress-status {
+  font-size: 13px !important;
+  margin-bottom: 10px !important;
+  color: #fff !important;
+}
+
+.akizuki-exporter-progress-bar-bg {
+  background: #550000 !important;
+  border-radius: 4px !important;
+  height: 10px !important;
+  overflow: hidden !important;
+}
+
+.akizuki-exporter-progress-bar {
+  background: linear-gradient(to right, #ffcc00, #ff9900) !important;
+  height: 100% !important;
+  border-radius: 4px !important;
+  transition: width 0.3s ease !important;
+}
+
+.akizuki-exporter-progress-detail {
+  font-size: 11px !important;
+  color: #ffcccc !important;
+  margin-top: 8px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.akizuki-exporter-progress-close {
+  position: absolute !important;
+  top: 8px !important;
+  right: 10px !important;
+  background: none !important;
+  border: none !important;
+  color: #ff9999 !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  padding: 4px !important;
+  line-height: 1 !important;
+}
+
+.akizuki-exporter-progress-close:hover {
+  color: #fff !important;
+}
+
+.akizuki-exporter-progress.success {
+  border-left: 6px solid #00cc00 !important;
+  background: #006600 !important;
+}
+
+.akizuki-exporter-progress.success .akizuki-exporter-progress-title {
+  color: #90ee90 !important;
+}
+
+.akizuki-exporter-progress.success .akizuki-exporter-progress-bar {
+  background: linear-gradient(to right, #00cc00, #00ff00) !important;
+}
+
+.akizuki-exporter-progress.error {
+  border-left: 6px solid #ff6600 !important;
+  background: #993300 !important;
+}
+
+.akizuki-exporter-progress.error .akizuki-exporter-progress-title {
+  color: #ffcc99 !important;
+}

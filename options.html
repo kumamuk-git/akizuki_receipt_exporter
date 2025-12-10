@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>秋月電子 領収書エクスポーター - 設定</title>
+  <style>
+    :root {
+      --akizuki-red: #cc0000;
+      --akizuki-dark-red: #8b0000;
+      --akizuki-yellow: #ffcc00;
+      --akizuki-orange: #ff9900;
+      --akizuki-bg: #ffffff;
+      --akizuki-light-bg: #f5f5f5;
+      --akizuki-text: #333333;
+      --akizuki-border: #cccccc;
+      --akizuki-success: #006600;
+      --akizuki-error: #cc3300;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif;
+      background: var(--akizuki-light-bg);
+      min-height: 100vh;
+      margin: 0;
+      padding: 30px;
+      color: var(--akizuki-text);
+    }
+    
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      background: linear-gradient(to bottom, #cc0000, #990000);
+      color: white;
+      padding: 20px 24px;
+      border-radius: 8px 8px 0 0;
+      margin-bottom: 0;
+      border-bottom: 4px solid var(--akizuki-yellow);
+    }
+    
+    .header h1 {
+      font-size: 22px;
+      margin: 0;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .header .subtitle {
+      color: var(--akizuki-yellow);
+      font-size: 13px;
+      margin-top: 6px;
+    }
+    
+    .card {
+      background: var(--akizuki-bg);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .card:first-of-type {
+      border-radius: 0 0 8px 8px;
+      margin-top: 0;
+    }
+    
+    .card h2 {
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--akizuki-dark-red);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--akizuki-yellow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+    
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--akizuki-text);
+      margin-bottom: 6px;
+    }
+    
+    input[type="text"], input[type="url"], input[type="number"], select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--akizuki-border);
+      border-radius: 4px;
+      background: var(--akizuki-bg);
+      color: var(--akizuki-text);
+      font-size: 14px;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--akizuki-red);
+      box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15);
+    }
+    
+    select {
+      cursor: pointer;
+    }
+    
+    .help-text {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+    
+    .inline-group {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .inline-group .form-group {
+      flex: 1;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: normal;
+    }
+    
+    .checkbox-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--akizuki-red);
+      cursor: pointer;
+    }
+    
+    button {
+      background: linear-gradient(to bottom, #ffcc00, #ff9900);
+      border: 1px solid #cc7700;
+      border-radius: 4px;
+      color: #333;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    button:hover {
+      background: linear-gradient(to bottom, #ffdd33, #ffaa33);
+    }
+    
+    button:active {
+      background: #ff9900;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .btn-secondary {
+      background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+      border: 1px solid #bbb;
+    }
+    
+    .btn-secondary:hover {
+      background: linear-gradient(to bottom, #e8e8e8, #d5d5d5);
+    }
+    
+    .save-section {
+      text-align: center;
+      margin-top: 24px;
+    }
+    
+    .status {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 4px;
+      text-align: center;
+      display: none;
+      font-size: 14px;
+    }
+    
+    .status.success {
+      display: block;
+      background: #e6f4e6;
+      border: 1px solid var(--akizuki-success);
+      color: var(--akizuki-success);
+    }
+    
+    .status.error {
+      display: block;
+      background: #fef0ed;
+      border: 1px solid var(--akizuki-error);
+      color: var(--akizuki-error);
+    }
+    
+    .variables-info {
+      background: var(--akizuki-light-bg);
+      padding: 14px;
+      border-radius: 4px;
+      margin-top: 10px;
+      border: 1px solid #e0e0e0;
+    }
+    
+    .variables-info strong {
+      font-size: 13px;
+      color: var(--akizuki-dark-red);
+    }
+    
+    .variables-info code {
+      background: var(--akizuki-bg);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+      color: var(--akizuki-dark-red);
+      border: 1px solid #ddd;
+    }
+    
+    .variables-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    
+    .var-item {
+      font-size: 12px;
+      color: #555;
+    }
+    
+    .fetch-btn {
+      margin-top: 12px;
+    }
+    
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ddd;
+      border-top-color: var(--akizuki-red);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .info-box {
+      background: #fff8e6;
+      border: 1px solid var(--akizuki-orange);
+      border-radius: 4px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #664400;
+    }
+    
+    .info-box strong {
+      color: var(--akizuki-dark-red);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📄 秋月電子 領収書エクスポーター</h1>
+      <div class="subtitle">設定画面</div>
+    </div>
+    
+    <div class="card">
+      <h2>🏢 宛名自動入力</h2>
+      <div class="info-box">
+        <strong>💡 ヒント:</strong> 注文を選択（チェックボックスON）すると、下記の会社名・部署名が自動入力されます。秋月電子の注文履歴ページで宛名を一括で入力したい場合に便利です。
+      </div>
+      
+      <div class="form-group">
+        <label for="auto-fill-company">会社名</label>
+        <input type="text" id="auto-fill-company" placeholder="例: 株式会社サンプル">
+        <div class="help-text">選択時に自動入力される会社名</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="auto-fill-department">部署名</label>
+        <input type="text" id="auto-fill-department" placeholder="例: 経理部">
+        <div class="help-text">選択時に自動入力される部署名</div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>📁 ファイル名パターン</h2>
+      <div class="form-group">
+        <label for="filename-pattern">デフォルトのファイル名パターン</label>
+        <input type="text" id="filename-pattern" value="{date}_{order_id}_{type}">
+        <div class="help-text">拡張子(.pdf)は自動で付与されます</div>
+      </div>
+      
+      <div class="variables-info">
+        <strong>使用可能な変数:</strong>
+        <div class="variables-list">
+          <div class="var-item"><code>{date}</code> 注文日</div>
+          <div class="var-item"><code>{order_id}</code> 注文番号</div>
+          <div class="var-item"><code>{base_order_id}</code> ベース注文番号</div>
+          <div class="var-item"><code>{type}</code> 書類種別</div>
+          <div class="var-item"><code>{price}</code> 購入額</div>
+          <div class="var-item"><code>{product}</code> 商品名</div>
+          <div class="var-item"><code>{dropdown}</code> ドロップダウン選択値</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>📄 保存する書類</h2>
+      <div class="form-group">
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="download-receipt" checked>
+            <span>領収書</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="download-delivery-slip" checked>
+            <span>納品書</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="download-invoice" checked>
+            <span>請求書</span>
+          </label>
+        </div>
+        <div class="help-text">ダウンロードしたい書類の種類を選択してください</div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>📊 スプレッドシート連携</h2>
+      <p class="help-text" style="margin-top: 0; margin-bottom: 16px;">
+        Googleスプレッドシートのデータをドロップダウンリストとして表示し、ファイル名に使用できます。<br>
+        ※スプレッドシートは「リンクを知っている全員が閲覧可能」に設定してください。
+      </p>
+      
+      <div class="form-group">
+        <label for="spreadsheet-url">スプレッドシートURL</label>
+        <input type="url" id="spreadsheet-url" placeholder="https://docs.google.com/spreadsheets/d/xxxxx/edit">
+        <div class="help-text">スプレッドシートの共有URLを入力してください</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="sheet-name">シート名</label>
+        <input type="text" id="sheet-name" placeholder="シート名を入力（例: シート1, 経費一覧）" value="シート1">
+        <div class="help-text">スプレッドシート下部のタブに表示されているシート名を入力してください</div>
+      </div>
+      
+      <div class="inline-group">
+        <div class="form-group">
+          <label for="column-name">列名（例: A, B, C...）</label>
+          <input type="text" id="column-name" placeholder="A" maxlength="2">
+        </div>
+        <div class="form-group">
+          <label for="header-row">ヘッダー行（データ開始行）</label>
+          <input type="number" id="header-row" value="2" min="1">
+          <div class="help-text">1行目がヘッダーの場合は2を指定</div>
+        </div>
+      </div>
+      
+      <button type="button" id="test-fetch-btn" class="btn-secondary fetch-btn">データをテスト取得</button>
+      <div id="test-result" class="help-text" style="margin-top: 8px;"></div>
+    </div>
+    
+    <div class="save-section">
+      <button id="save-btn">💾 設定を保存</button>
+      <div id="status" class="status"></div>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

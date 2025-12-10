@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>秋月電子 領収書エクスポーター</title>
+  <style>
+    :root {
+      --akizuki-red: #cc0000;
+      --akizuki-dark-red: #8b0000;
+      --akizuki-yellow: #ffcc00;
+      --akizuki-orange: #ff9900;
+      --akizuki-bg: #ffffff;
+      --akizuki-light-bg: #f5f5f5;
+      --akizuki-text: #333333;
+      --akizuki-border: #cccccc;
+      --akizuki-success: #006600;
+      --akizuki-error: #cc3300;
+    }
+    
+    body {
+      width: 340px;
+      padding: 0;
+      font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif;
+      background: var(--akizuki-bg);
+      color: var(--akizuki-text);
+      margin: 0;
+    }
+    
+    .header {
+      background: linear-gradient(to bottom, #cc0000, #990000);
+      color: white;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 3px solid var(--akizuki-yellow);
+    }
+    
+    .header h1 {
+      font-size: 14px;
+      margin: 0;
+      font-weight: bold;
+    }
+    
+    .header .logo {
+      font-size: 18px;
+    }
+    
+    .header .subtitle {
+      font-size: 11px;
+      color: var(--akizuki-yellow);
+      margin-left: auto;
+    }
+    
+    .content {
+      padding: 16px;
+    }
+    
+    .form-group {
+      margin-bottom: 14px;
+    }
+    
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--akizuki-text);
+      margin-bottom: 4px;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--akizuki-border);
+      border-radius: 3px;
+      background: var(--akizuki-bg);
+      color: var(--akizuki-text);
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--akizuki-red);
+      box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.2);
+    }
+    
+    .help-text {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    
+    .help-text code {
+      background: var(--akizuki-light-bg);
+      padding: 1px 4px;
+      border-radius: 2px;
+      font-family: monospace;
+      font-size: 10px;
+      color: var(--akizuki-dark-red);
+      border: 1px solid #ddd;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--akizuki-light-bg);
+      padding: 10px 12px;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+    }
+    
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    
+    .checkbox-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--akizuki-red);
+      cursor: pointer;
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to bottom, #ffcc00, #ff9900);
+      border: 1px solid #cc7700;
+      border-radius: 4px;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    button:hover {
+      background: linear-gradient(to bottom, #ffdd33, #ffaa33);
+    }
+    
+    button:active {
+      background: #ff9900;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    button:disabled {
+      background: #e0e0e0;
+      border-color: #ccc;
+      color: #999;
+      cursor: not-allowed;
+    }
+    
+    .status {
+      font-size: 12px;
+      color: #666;
+      margin-top: 12px;
+      padding: 10px;
+      background: var(--akizuki-light-bg);
+      border-radius: 4px;
+      text-align: center;
+      min-height: 18px;
+      border: 1px solid #e0e0e0;
+    }
+    
+    .status.success {
+      background: #e6f4e6;
+      border-color: var(--akizuki-success);
+      color: var(--akizuki-success);
+    }
+    
+    .status.error {
+      background: #fef0ed;
+      border-color: var(--akizuki-error);
+      color: var(--akizuki-error);
+    }
+    
+    .footer {
+      padding: 12px 16px;
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+      background: var(--akizuki-light-bg);
+    }
+    
+    .footer a {
+      color: var(--akizuki-red);
+      text-decoration: none;
+      font-size: 12px;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .section-title {
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--akizuki-dark-red);
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="logo">📄</span>
+    <h1>秋月電子 領収書エクスポーター</h1>
+    <span class="subtitle">v1.0</span>
+  </div>
+  
+  <div class="content">
+    <div class="form-group">
+      <div class="section-title">📁 保存する書類</div>
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="download-receipt" checked>
+          <span>領収書</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="download-delivery-slip" checked>
+          <span>納品書</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="download-invoice" checked>
+          <span>請求書</span>
+        </label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="filename-pattern">📝 ファイル名パターン</label>
+      <input type="text" id="filename-pattern" value="{date}_{order_id}_{type}">
+      <div class="help-text">
+        <code>{date}</code> <code>{order_id}</code> <code>{type}</code> <code>{price}</code> <code>{product}</code> <code>{dropdown}</code>
+      </div>
+    </div>
+    
+    <button id="download-btn">
+      <span>⬇️</span>
+      <span>選択した注文をダウンロード</span>
+    </button>
+    
+    <div id="status" class="status">✓ 注文履歴でチェックを入れてダウンロードしてください</div>
+  </div>
+  
+  <div class="footer">
+    <a href="#" id="options-link">⚙️ 詳細設定（会社名自動入力・スプレッドシート連携）</a>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
