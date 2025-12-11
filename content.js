@@ -111,6 +111,8 @@ function columnLetterToIndex(letter) {
 function addCheckboxes() {
   if (!isInitialized) return;
   
+  addSelectAllCheckbox();
+  
   document.querySelectorAll('.block-purchase-history--frame').forEach((frame) => {
     if (frame.querySelector('.akizuki-exporter-container') || frame.dataset.akizukiExporterProcessed) return;
     if (frame.querySelector('.block-purchase-history--order-cancel-data')) {
@@ -134,6 +136,7 @@ function addCheckboxes() {
       const dropdown = container.querySelector('.akizuki-exporter-dropdown');
       if (dropdown) dropdown.disabled = !e.target.checked;
       if (e.target.checked && autoFillSettings) autoFillAddressFields(frame);
+      updateSelectAllState();
     });
     container.appendChild(checkbox);
     
@@ -166,6 +169,56 @@ function addCheckboxes() {
     if (firstTd) firstTd.insertBefore(container, firstTd.firstChild);
     frame.dataset.akizukiExporterProcessed = 'true';
   });
+}
+
+function addSelectAllCheckbox() {
+  if (document.getElementById('akizuki-exporter-select-all-container')) return;
+
+  const firstFrame = document.querySelector('.block-purchase-history--frame');
+  if (!firstFrame) return;
+
+  const container = document.createElement('div');
+  container.id = 'akizuki-exporter-select-all-container';
+  container.className = 'akizuki-exporter-container';
+  container.style.marginBottom = '12px';
+  container.style.width = 'fit-content';
+  
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.id = 'akizuki-exporter-select-all';
+  checkbox.className = 'akizuki-exporter-checkbox';
+  
+  checkbox.addEventListener('change', (e) => {
+    const checked = e.target.checked;
+    document.querySelectorAll('.akizuki-exporter-checkbox:not(#akizuki-exporter-select-all)').forEach(cb => {
+      if (cb.checked !== checked) {
+        cb.checked = checked;
+        cb.dispatchEvent(new Event('change'));
+      }
+    });
+  });
+  
+  container.appendChild(checkbox);
+  
+  const label = document.createElement('label');
+  label.htmlFor = 'akizuki-exporter-select-all';
+  label.className = 'akizuki-exporter-label';
+  label.textContent = 'すべて選択 / 解除';
+  label.style.cursor = 'pointer';
+  container.appendChild(label);
+  
+  firstFrame.parentNode.insertBefore(container, firstFrame);
+}
+
+function updateSelectAllState() {
+  const selectAllCb = document.getElementById('akizuki-exporter-select-all');
+  if (!selectAllCb) return;
+  
+  const checkboxes = document.querySelectorAll('.akizuki-exporter-checkbox:not(#akizuki-exporter-select-all)');
+  if (checkboxes.length === 0) return;
+  
+  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+  selectAllCb.checked = allChecked;
 }
 
 function autoFillAddressFields(frame) {
